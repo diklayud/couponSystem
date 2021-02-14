@@ -1,4 +1,4 @@
-package myTest;
+package e2e_test;
 
 import exceptions.CouponSystemException;
 

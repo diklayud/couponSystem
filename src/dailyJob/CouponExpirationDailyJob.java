@@ -34,13 +34,14 @@ public class CouponExpirationDailyJob implements Runnable {
 	public void run() {
 		setThread(Thread.currentThread());
 		while (!quit) {
+			System.out.println("run daily job is started");
 			// here job- logic of delete expired coupons - using DAOs
 			// every 24 hours this runs
 			try {
 				couponsDao.deleteCouponPurchaseByCouponExpirationDate();
 				couponsDao.deleteCouponByCouponExpirationDate();
 				//Thread.sleep(TimeUnit.HOURS.toMillis(24)); // runtime
-				Thread.sleep(TimeUnit.SECONDS.toMillis(12)); // for testing
+				Thread.sleep(TimeUnit.SECONDS.toMillis(10)); // for testing
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				System.out.println("job sleep was interrupted");

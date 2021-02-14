@@ -1,4 +1,4 @@
-package testsInProgress;
+package testsDAO;
 
 import javax.swing.JOptionPane;
 

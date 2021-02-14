@@ -23,13 +23,22 @@ public class CompanyFacade extends ClientFacade {
 		this.couponsDao = new CouponsDaoDB();
 	}
 
+	// GETTER
+	
+	/**
+	 * @return the ID of the logged-in company
+	 */
+	public int getCompanyId() {
+		return companyId;
+	}
+
 	// METHOD FROM SUPERCLASS
 	@Override
-	public boolean login(String email, String password) throws CouponSystemException{
-		try {	
+	public boolean login(String email, String password) throws CouponSystemException {
+		try {
 			boolean exist = companiesDao.isCompanyExists(email, password);
-			if(exist) {
-				this.companyId = this.companiesDao.getIdOfCompanyByEmailPassword(email,password);
+			if (exist) {
+				this.companyId = this.companiesDao.getIdOfCompanyByEmailPassword(email, password);
 				return true;
 			}
 			return false;
@@ -40,28 +49,29 @@ public class CompanyFacade extends ClientFacade {
 	}
 
 	// METHODS
-	
+
 	/**
 	 * add coupon if not exist coupon with same title under same company in DB
 	 * 
 	 * @param coupon
 	 * @throws CouponSystemException
 	 */
-	public void addCoupon(Coupon coupon) throws CouponSystemException{				
+	public void addCoupon(Coupon coupon) throws CouponSystemException {
 		try {
-			boolean exist = couponsDao.isCouponTitleExist(coupon.getCompanyId(), coupon.getCouponTitle());
-			if(!exist) {
+			boolean exist = couponsDao.isCouponTitleExist(this.companyId, coupon.getCouponTitle());
+			if (!exist) {
 				couponsDao.addCoupon(coupon);
-			}else {
-				throw new CouponSystemException("add Coupon failed- coupon title: " + coupon.getCouponTitle() + " already exist under company id: " + coupon.getCompanyId());
+			} else {
+				throw new CouponSystemException("add Coupon failed- coupon title: " + coupon.getCouponTitle()
+						+ " already exist under company id: " + coupon.getCompanyId());
 			}
-		} catch(CouponSystemException e) {
+		} catch (CouponSystemException e) {
 			throw new CouponSystemException(e.getMessage());
 		}
 	}
-	
+
 	/**
-	 * update Coupon details except to Coupon id or company id or  creation date
+	 * update Coupon details except to Coupon id or company id or creation date
 	 * 
 	 * @param coupon
 	 * @throws CouponSystemException
@@ -75,7 +85,7 @@ public class CompanyFacade extends ClientFacade {
 			// check if title not exist in DB
 			boolean exist = this.couponsDao.isCouponTitleExist(coupon.getCompanyId(), coupon.getCouponTitle());
 			if (exist == false) {
-				
+
 				// update the permitted fields
 				couponFromDb.setCategory(coupon.getCategory());
 				couponFromDb.setCouponTitle(coupon.getCouponTitle());
@@ -97,8 +107,8 @@ public class CompanyFacade extends ClientFacade {
 	}
 
 	/**
-	 *  delete coupon and it's purchases
-	 *  
+	 * delete coupon and it's purchases
+	 * 
 	 * @param couponID
 	 * @throws CouponSystemException
 	 */
@@ -106,48 +116,48 @@ public class CompanyFacade extends ClientFacade {
 		this.couponsDao.deleteCouponPurchaseByCouponID(couponID);
 		this.couponsDao.deleteCoupon(couponID);
 	}
-	
+
 	/**
 	 * @return list of company's coupons
 	 * @throws CouponSystemException
 	 */
-	public List<Coupon> getAllCompanyCoupons() throws CouponSystemException{
-		if (this.companyId == -1){
+	public List<Coupon> getAllCompanyCoupons() throws CouponSystemException {
+		if (this.companyId == -1) {
 			throw new CouponSystemException("You should Login first..");
 		}
 		return this.couponsDao.getAllCompanyCoupons(this.companyId);
 	}
-	
+
 	/**
 	 * @param categoryID
 	 * @return list of company's coupons of certain category
 	 * @throws CouponSystemException
 	 */
 	public List<Coupon> getAllCompanyCouponsByCategory(Category categoryID) throws CouponSystemException {
-		if (this.companyId == -1){
+		if (this.companyId == -1) {
 			throw new CouponSystemException("You should Login first..");
 		}
 		return this.couponsDao.getAllCompanyCouponsByCategory(this.companyId, categoryID);
 	}
-	
+
 	/**
 	 * @param couponMaxPrice
 	 * @return list of company's coupons below maximum price
 	 * @throws CouponSystemException
 	 */
 	public List<Coupon> getAllCompanyCouponsByPrice(double couponMaxPrice) throws CouponSystemException {
-		if (this.companyId == -1){
+		if (this.companyId == -1) {
 			throw new CouponSystemException("You should Login first..");
 		}
 		return this.couponsDao.getAllCompanyCouponsByPrice(this.companyId, couponMaxPrice);
 	}
-	
+
 	/**
 	 * @return company with it's details
 	 * @throws CouponSystemException
 	 */
 	public Company getOneCompany() throws CouponSystemException {
-		if (this.companyId == -1){
+		if (this.companyId == -1) {
 			throw new CouponSystemException("You should Login first..");
 		}
 		return this.companiesDao.getOneCompany(this.companyId);

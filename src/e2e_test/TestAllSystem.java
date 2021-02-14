@@ -1,4 +1,4 @@
-package myTest;
+package e2e_test;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +15,7 @@ import javaBeans.Coupon;
 import javaBeans.Customer;
 import loginManager.ClientType;
 import loginManager.LoginManager;
+import util.DaoDB_Util;
 
 public class TestAllSystem {
 
@@ -455,6 +456,7 @@ public class TestAllSystem {
 
 				System.out.println("Test get CustomerDetails Failed!!!!!");
 			}
+			
 			{
 				// 2. Test purchase coupon
 				Coupon coupon = companyFacade.getAllCompanyCoupons().get(2);
@@ -464,6 +466,7 @@ public class TestAllSystem {
 					System.out.println("Test purchase coupon Failed!!!!!");
 				}
 			}
+			
 			{
 				// 3. Test purchase same coupon again
 				Coupon coupon = companyFacade.getAllCompanyCoupons().get(2);
@@ -478,14 +481,14 @@ public class TestAllSystem {
 				
 			}
 			
-			
-			// 4. Test Get the purchased coupons of the logged in Customer
 			{
+				// 4. Test Get the purchased coupons of the logged in Customer
 				List<Coupon> couponsCustomerBuy = customerFacade.getAllCustomerCoupons();
 				if(couponsCustomerBuy.size() != 3) {
 					System.out.println("Test get all purchase coupon Failed!!!!!");
 				}			
 			}
+			
 			{			
 				// 5. Test Get the purchased coupons to max price of the logged in Customer
 				List<Coupon> couponsCustomerByPrice100 = customerFacade.getAllCustomerCouponsByPrice(100);

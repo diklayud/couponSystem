@@ -1,4 +1,4 @@
-package testsInProgress;
+package testsDAO;
 
 import java.net.MulticastSocket;
 import java.util.List;

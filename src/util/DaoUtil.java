@@ -1,4 +1,4 @@
-package myTest;
+package util;
 
 import exceptions.CouponSystemException;
 
