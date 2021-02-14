@@ -1,0 +1,10 @@
+Hi Eldar
+
+1. Path to the main test class:
+CouponSystem\src\tests_main\Program.java
+
+2. You can find my project source file in my github repository as well:
+https://github.com/diklayud/couponSystem
+
+Thanks,
+Dikla :)
